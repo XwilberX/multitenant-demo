@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: TENANT_SLUG
+  labels:
+    app.kubernetes.io/part-of: multitenant-demo
+    tenant: TENANT_SLUG

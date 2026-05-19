@@ -1,0 +1,49 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: tenant-beta
+
+resources:
+  - ../base
+
+patches:
+  - target:
+      kind: Namespace
+      name: TENANT_SLUG
+    patch: |
+      - op: replace
+        path: /metadata/name
+        value: tenant-beta
+      - op: replace
+        path: /metadata/labels/tenant
+        value: beta
+
+  - target:
+      kind: ConfigMap
+      name: tenant-config
+    patch: |
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: tenant-config
+      data:
+        config.yml: |
+          slug: beta
+          branding:
+            name: Beta SA de CV
+            color: "#dc2626"
+            logo_text: "□ BETA"
+          payment_provider: mercadopago
+          features:
+            enable_advanced_dashboard: false
+
+  - target:
+      kind: Ingress
+      name: tenant-ingress
+    patch: |
+      - op: replace
+        path: /spec/tls/0/hosts/0
+        value: beta.demo.dotinfra.tech
+      - op: replace
+        path: /spec/rules/0/host
+        value: beta.demo.dotinfra.tech

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tenant-config
+data:
+  config.yml: |
+    slug: TENANT_SLUG
+    branding:
+      name: TENANT_NAME
+      color: "TENANT_COLOR"
+      logo_text: "TENANT_LOGO"
+    payment_provider: TENANT_PAYMENT
+    features:
+      enable_advanced_dashboard: TENANT_DASHBOARD

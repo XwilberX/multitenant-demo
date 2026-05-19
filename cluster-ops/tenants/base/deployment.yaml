@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: ghcr.io/xwilberx/multitenant-demo-backend:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: TENANT_CONFIG_PATH
+              value: /etc/tenant/config.yml
+          volumeMounts:
+            - name: tenant-config
+              mountPath: /etc/tenant
+              readOnly: true
+      volumes:
+        - name: tenant-config
+          configMap:
+            name: tenant-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: ghcr.io/xwilberx/multitenant-demo-frontend:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: BACKEND_URL
+              value: http://backend:8000
