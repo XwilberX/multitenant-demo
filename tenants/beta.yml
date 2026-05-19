@@ -1,0 +1,8 @@
+slug: beta
+branding:
+  name: Beta SA de CV
+  color: "#dc2626"
+  logo_text: "□ BETA"
+payment_provider: mercadopago
+features:
+  enable_advanced_dashboard: false

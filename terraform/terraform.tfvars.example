@@ -1,0 +1,16 @@
+# Copiar a terraform.tfvars (gitignored) y completar.
+
+do_token           = "dop_v1_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+cloudflare_token   = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+cloudflare_zone_id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# Defaults (descomentar para sobreescribir)
+# domain           = "dotinfra.tech"
+# subdomain_prefix = "demo"
+# region           = "nyc1"
+# node_size        = "s-2vcpu-4gb"
+# node_count       = 2
+
+# lb_ip se llena en la SEGUNDA pasada, después de instalar ingress-nginx.
+# Dejarlo vacío o ausente en la primera pasada.
+# lb_ip = "1.2.3.4"

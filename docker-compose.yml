@@ -1,0 +1,44 @@
+services:
+  backend-alpha:
+    build: ./app/backend
+    image: multitenant-demo-backend:dev
+    container_name: demo-backend-alpha
+    environment:
+      TENANT_CONFIG_PATH: /etc/tenant/config.yml
+    volumes:
+      - ./tenants/alpha.yml:/etc/tenant/config.yml:ro
+    ports:
+      - "18001:8000"
+
+  backend-beta:
+    build: ./app/backend
+    image: multitenant-demo-backend:dev
+    container_name: demo-backend-beta
+    environment:
+      TENANT_CONFIG_PATH: /etc/tenant/config.yml
+    volumes:
+      - ./tenants/beta.yml:/etc/tenant/config.yml:ro
+    ports:
+      - "18002:8000"
+
+  frontend-alpha:
+    build: ./app/frontend
+    image: multitenant-demo-frontend:dev
+    container_name: demo-frontend-alpha
+    environment:
+      BACKEND_URL: http://backend-alpha:8000
+    ports:
+      - "13001:80"
+    depends_on:
+      - backend-alpha
+
+  frontend-beta:
+    build: ./app/frontend
+    image: multitenant-demo-frontend:dev
+    container_name: demo-frontend-beta
+    environment:
+      BACKEND_URL: http://backend-beta:8000
+    ports:
+      - "13002:80"
+    depends_on:
+      - backend-beta

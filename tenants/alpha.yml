@@ -1,0 +1,8 @@
+slug: alpha
+branding:
+  name: Alpha Corporation
+  color: "#1d4ed8"
+  logo_text: "△ ALPHA"
+payment_provider: stripe
+features:
+  enable_advanced_dashboard: true
