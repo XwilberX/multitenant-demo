@@ -1,0 +1,49 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: tenant-charlie
+
+resources:
+  - ../base
+
+patches:
+  - target:
+      kind: Namespace
+      name: TENANT_SLUG
+    patch: |
+      - op: replace
+        path: /metadata/name
+        value: tenant-charlie
+      - op: replace
+        path: /metadata/labels/tenant
+        value: charlie
+
+  - target:
+      kind: ConfigMap
+      name: tenant-config
+    patch: |
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: tenant-config
+      data:
+        config.yml: |
+          slug: charlie
+          branding:
+            name: Charlie Industries
+            color: "#059669"
+            logo_text: "◇ CHARLIE"
+          payment_provider: stripe
+          features:
+            enable_advanced_dashboard: true
+
+  - target:
+      kind: Ingress
+      name: tenant-ingress
+    patch: |
+      - op: replace
+        path: /spec/tls/0/hosts/0
+        value: charlie.demo.dotinfra.tech
+      - op: replace
+        path: /spec/rules/0/host
+        value: charlie.demo.dotinfra.tech
